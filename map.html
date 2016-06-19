@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Fishy Business | Tracking all your fishes!</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom styling plus plugins -->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icheck/flat/green.css" rel="stylesheet">
+
+    <script src="js/jquery-2.2.3.js"></script>
+    <script src="js/moment.js"></script>
+    <script type="text/javascript" src="js/datepicker/daterangepicker.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/carpanalysis.js"></script>
+    <script src="js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCui95d3apOgGwl5eFT0tzRfcuwkAFa-k4&libraries=drawing&callback=initMap" async defer></script>
+    <!--[if lt IE 9]>
+    <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #map {
+        height: calc(100vh - 57px - 45px - 20px);
+
+    }
+    .no-space {
+        padding: 0;
+        margin: 0;
+        overflow:hidden;
+    }
+    </style>
+</head>
+
+
+<body class="nav-md">
+
+    <div class="container body">
+
+
+        <div class="main_container">
+
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><img src="images/fish.png" width="50px"> <span>Fishy Business</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!-- menu prile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src="images/jonathan.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>Jonathan</h2>
+                        </div>
+                    </div>
+                    <!-- /menu prile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                        <div class="menu_section">
+                            <h3>Live Data</h3>
+                            <ul class="nav side-menu">
+                                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="index.html">Dashboard</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a><i class="fa fa-area-chart"></i> Lake Analysis <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="map.html"><i class="fa fa-map-marker"></i> Map <span class="label label-success pull-right">Functioning</span></a></li>
+                                        <!-- <li><a href="videofeed.html"><i class="fa fa-video-camera"></i> Camera 2 <span class="label label-warning pull-right">Down</span></a></li> -->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Historical Data</h3>
+                            <ul class="nav side-menu">
+
+                                <li><a><i class="fa fa-bar-chart-o"></i> Historical Data <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="temperature.html">Temperature</a>
+                                        </li>
+                                        <li><a href="motion.html">Motion </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="index2.html" target="_blank"><i class="fa fa-code"></i> Rest API <span class="label label-info pull-right">Documentation</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+
+                <div class="nav_menu no-space">
+                    <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+
+                            <li role="presentation" class="dropdown" style="right:10px">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">6</span>
+                                </a>
+                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list animated fadeInDown" role="menu">
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/jonathan.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>Jonathan</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="text-center">
+                                            <a href="inbox.html">
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-space">
+                        <div id="map" position="absolute" height="100%" width="100%"></div>
+
+                        <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;position:absolute;right:0px;top:10px">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2><i class="fa fa-fire"></i> Water Analysis <small>with real-time data</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="x_content">
+
+                                    <p>Analysis of water is done via the Real Time Data polled by USGS sensors.
+                                        A series of algorithm will run analysis on the Temperature and Flow data. This may take some time, please be patient!</p>
+                                        <br />
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2>Select date range:</h2>
+                                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                                    <span>January 28, 2015 - January 28, 2015</span> <b class="caret"></b>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2>Select River Sensor:</h2>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sensor Selection
+                                                        <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu dropdown-usermenu">
+                                                            <li><a href="javascript:;" onclick="loadGDD('04119400', window.startDate, window.endDate)"> GRAND RIVER NEAR EASTMANVILLE</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04157005', window.startDate, window.endDate)"> SAGINAW RIVER AT HOLLAND AVENUE AT SAGINAW</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04165500', window.startDate, window.endDate)"> CLINTON RIVER AT MORAVIAN DRIVE AT MT. CLEMENS</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04231600', window.startDate, window.endDate)"> GENESEE RIVER AT FORD STREET BRIDGE, ROCHESTER</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04092750', window.startDate, window.endDate)"> INDIANA HARBOR CANAL AT EAST CHICAGO</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04095090', window.startDate, window.endDate)"> PORTAGE-BURNS WATERWAY AT PORTAGE</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04182755', window.startDate, window.endDate)"> JUNK DITCH AT FORT WAYNE</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('05536890', window.startDate, window.endDate)"> CHICAGO SANITARY AND SHIP CANAL NR LEMONT</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04087170', window.startDate, window.endDate)"> MILWAUKEE RIVER AT MOUTH AT MILWAUKEE</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04087142', window.startDate, window.endDate)"> MENOMONEE RIVER AT 16TH STREET AT MILWAUKEE</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('040851385', window.startDate, window.endDate)"> FOX RIVER AT OIL TANK DEPOT AT GREEN BAY</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04073466', window.startDate, window.endDate)"> SILVER CREEK AT SPAULDING ROAD NEAR GREEN LAKE</a></li>
+                                                            <li><a href="javascript:;" onclick="loadGDD('04084445', window.startDate, window.endDate)"> FOX RIVER AT APPLETON</a></li>
+                                                        </ul>
+                                                    </div>
+
+
+                                                </div>
+                                        </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h2>Calculated GDD Score:</h2>
+                                                    <h3 id="gdd-score">---</h3>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <div class="product_price">
+                                                    <h2>Legend</h2>
+                                                    <ul class="list-inline prod_color">
+                                                        <li>
+                                                            <p>All's Good!</p>
+                                                            <div class="color bg-green"></div>
+                                                        </li>
+                                                        <li>
+                                                            <p>Warning!</p>
+                                                            <div class="color bg-orange"></div>
+                                                        </li>
+                                                        <li>
+                                                            <p>Danger!</p>
+                                                            <div class="color bg-red"></div>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- footer content -->
+                        <footer>
+                            <div class="copyright-info">
+                                <p class="pull-right">Fishy Business - Monitoring fish since 2016
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </footer>
+                        <!-- /footer content -->
+
+                    </div>
+                    <!-- /page content -->
+                </div>
+
+            </div>
+
+            <div id="custom_notifications" class="custom-notifications dsp_none">
+                <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+                </ul>
+                <div class="clearfix"></div>
+                <div id="notif-group" class="tabbed_notifications"></div>
+            </div>
+
+            <script src="js/bootstrap.min.js"></script>
+
+            <!-- bootstrap progress js -->
+            <script src="js/progressbar/bootstrap-progressbar.min.js"></script>
+
+            <!-- icheck -->
+            <script src="js/icheck/icheck.min.js"></script>
+            <!-- pace -->
+            <script src="js/pace/pace.min.js"></script>
+            <script src="js/custom.js"></script>
+        </body>
+
+
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+
+            var cb = function(start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                window.startDate = start.format('YYYY-MM-DD');
+                window.endDate = end.format('YYYY-MM-DD');
+                //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
+            }
+
+            var optionSet1 = {
+                startDate: moment().subtract(7, 'days'),
+                endDate: moment(),
+                minDate: '01/01/2012',
+                maxDate: moment(),
+                dateLimit: {
+                    days: 365
+                },
+                showDropdowns: true,
+                showWeekNumbers: true,
+                timePicker: false,
+                timePickerIncrement: 1,
+                timePicker12Hour: true,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                opens: 'left',
+                buttonClasses: ['btn btn-default'],
+                applyClass: 'btn-small btn-primary',
+                cancelClass: 'btn-small',
+                format: 'MM/DD/YYYY',
+                separator: ' to ',
+                locale: {
+                    applyLabel: 'Submit',
+                    cancelLabel: 'Clear',
+                    fromLabel: 'From',
+                    toLabel: 'To',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    firstDay: 1
+                }
+            };
+            $('#reportrange span').html(moment().subtract(7, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+            $('#reportrange').daterangepicker(optionSet1, cb);
+            $('#reportrange').on('show.daterangepicker', function() {
+                console.log("show event fired");
+            });
+            $('#reportrange').on('hide.daterangepicker', function() {
+                console.log("hide event fired");
+            });
+            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+                console.log("apply event fired, start/end dates are " + picker.startDate.format('YYYY-MM-DD') + " to " + picker.endDate.format('YYYY-MM-DD'));
+                window.startDate = picker.startDate.format('YYYY-MM-DD');
+                window.endDate = picker.endDate.format('YYYY-MM-DD');
+            });
+            $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+                console.log("cancel event fired");
+            });
+            $('#options1').click(function() {
+                $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+            });
+            $('#options2').click(function() {
+                $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+            });
+            $('#destroy').click(function() {
+                $('#reportrange').data('daterangepicker').remove();
+            });
+        });
+        </script>
+
+
+        </html>
